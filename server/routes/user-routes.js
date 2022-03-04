@@ -2,12 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 const AWS = require('aws-sdk');
-const awsConfig = {
-    region: 'us-east-2',
-    endpoint: 'http://localhost:8000'
-};
-
-AWS.config.update(awsConfig);
+AWS.config.update({
+    region: "us-east-2"
+});
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 const table = 'Thoughts';
@@ -18,7 +15,7 @@ router.get('/users', (req, res) => {
     };
 
     dynamodb.scan(params, (err, data) => {
-        if(err) {
+        if (err) {
             res.status(500).json(err);
         } else {
             res.json(data.Items);
@@ -40,10 +37,10 @@ router.get('/users/:username', (req, res) => {
             ':user': req.params.username
         }
     }
-    
-    
+
+
     dynamodb.query(params, (err, data) => {
-        if(err) {
+        if (err) {
             res.status(500).json(err);
         } else {
             res.json(data.Items);
@@ -62,7 +59,7 @@ router.post('/users', (req, res) => {
     }
 
     dynamodb.put(params, (err, data) => {
-        if(err) {
+        if (err) {
             res.status(500).json(err)
         } else {
             res.json(data);

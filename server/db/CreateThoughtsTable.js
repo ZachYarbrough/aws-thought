@@ -1,8 +1,7 @@
 const AWS = require('aws-sdk');
 
 AWS.config.update({
-    region: 'us-east-2',
-    endpoint: 'http://localhost:8000'
+    region: "us-east-2"
 });
 
 const dynamodb = new AWS.DynamoDB({ apiVersion: '2012-08-10' });
@@ -11,11 +10,11 @@ const params = {
     TableName: 'Thoughts',
     KeySchema: [
         { AttributeName: 'username', KeyType: 'HASH' },
-        { AttributeName: 'createdAt', KeyType: 'RANGE'}
+        { AttributeName: 'createdAt', KeyType: 'RANGE' }
     ],
     AttributeDefinitions: [
         { AttributeName: 'username', AttributeType: 'S' },
-        { AttributeName: 'createdAt', AttributeType: 'N'}
+        { AttributeName: 'createdAt', AttributeType: 'N' }
     ],
     ProvisionedThroughput: {
         ReadCapacityUnits: 10,
@@ -24,7 +23,7 @@ const params = {
 };
 
 dynamodb.createTable(params, (err, data) => {
-    if(err) {
+    if (err) {
         console.log("Unable to create table. Error JSON:", JSON.stringify(err, null, 2));
     } else {
         console.log("Created table. Table description JSON:", JSON.stringify(data, null, 2));
